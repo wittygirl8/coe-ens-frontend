@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
-# Enable Corepack to manage Yarn versions
-RUN corepack enable && corepack prepare yarn@4.6.0 --activate
+# Enable Corepack
+RUN corepack enable 
 
 # Set working directory
 WORKDIR /app
@@ -9,11 +9,17 @@ WORKDIR /app
 # Copy package.json and yarn.lock
 COPY package.json yarn.lock ./
 
-# Install dependencies using the correct Yarn version
+# Install the exact version of Yarn specified in package.json
+RUN corepack prepare yarn@4.6.0 --activate && yarn set version 4.6.0
+
+# Install dependencies
 RUN yarn install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
+
+# Ensure Yarn is accessible
+RUN yarn --version
 
 # Expose port 5173 for Vite
 EXPOSE 5173
