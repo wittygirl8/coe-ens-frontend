@@ -1,0 +1,17 @@
+:root {
+  @media (max-width: em(1400px)) {
+    font-size: 14px;
+  }
+}
+
+.active {
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  );
+  border-bottom: 2px solid var(--mantine-color-darkBlue-3);
+}
+
+.custom-background {
+  background-color: light-dark(var(--mantine-color-lightBlue-0), #000);
+}
