@@ -8,13 +8,13 @@ export default defineConfig({
     proxy: {
       '/api': {
         // Backend API
-        target: 'http://127.0.0.1:8000',
+        target: process.env.APPLICATION_BACKEND,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
       '/orc-api': {
         // Orchestrator API
-        target: 'http://127.0.0.1:8001',
+        target: process.env.ANALYSIS_ORCHESTRATION,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/orc-api/, ''),
       },

@@ -1,0 +1,474 @@
+[
+  {
+    "Company": "大阪税関関西空港税関支署（納付書）",
+    "Country": "Japan",
+    "IsVerified": true,
+    "UniqueId": 1225586,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "衛生福利部中央健康保險署",
+    "Country": "Taiwan",
+    "IsVerified": true,
+    "UniqueId": 1255587,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "西藏康哲药业发展有限公司",
+    "Country": "China",
+    "IsVerified": true,
+    "UniqueId": 1285588,
+    "isOrbisIdFound": false,
+    "suggestion": "西藏康哲药业发展有限公司 LLC"
+  },
+  {
+    "Company": "lonza ltd",
+    "Country": "Sweden",
+    "IsVerified": false,
+    "UniqueId": 1315589,
+    "isOrbisIdFound": false,
+    "suggestion": "lonza ltd LLC"
+  },
+  {
+    "Company": "神戸税関六甲ｱｲﾗﾝﾄﾞ出張所（納付書）",
+    "Country": "Japan",
+    "IsVerified": true,
+    "UniqueId": 1345590,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "限繳稅款",
+    "Country": "Taiwan",
+    "IsVerified": true,
+    "UniqueId": 1375591,
+    "isOrbisIdFound": false,
+    "suggestion": "限繳稅款 LLC"
+  },
+  {
+    "Company": "cms pharma dmcc",
+    "Country": "China",
+    "IsVerified": false,
+    "UniqueId": 1405592,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "medidata solutions inc",
+    "Country": "Sweden",
+    "IsVerified": true,
+    "UniqueId": 1435593,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "signant health management limited",
+    "Country": "Great Britain",
+    "IsVerified": true,
+    "UniqueId": 1465594,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "従業員住民税 r",
+    "Country": "Japan",
+    "IsVerified": true,
+    "UniqueId": 1495595,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "inceptua gmbh",
+    "Country": "Sweden",
+    "IsVerified": false,
+    "UniqueId": 1525596,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "㈜대웅제약",
+    "Country": "South Korea",
+    "IsVerified": true,
+    "UniqueId": 1555597,
+    "isOrbisIdFound": false,
+    "suggestion": "㈜대웅제약 LLC"
+  },
+  {
+    "Company": "Boston Children's Hospital",
+    "Country": "United States",
+    "IsVerified": true,
+    "UniqueId": 1585598,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "中国民族卫生协会",
+    "Country": "China",
+    "IsVerified": true,
+    "UniqueId": 1615599,
+    "isOrbisIdFound": false,
+    "suggestion": "中国民族卫生协会 LLC"
+  },
+  {
+    "Company": "中国健康促进基金会",
+    "Country": "China",
+    "IsVerified": true,
+    "UniqueId": 1645600,
+    "isOrbisIdFound": false,
+    "suggestion": "中国健康促进基金会 LLC"
+  },
+  {
+    "Company": "上海尚睿医药科技有限公司",
+    "Country": "China",
+    "IsVerified": false,
+    "UniqueId": 1675601,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "ct co phan duoc lieu trun",
+    "Country": "Vietnam",
+    "IsVerified": true,
+    "UniqueId": 1705602,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "swp-hapag lloyd reiseb.",
+    "Country": "Germany",
+    "IsVerified": true,
+    "UniqueId": 1735603,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "3hﾒﾃﾞｨｿﾘｭｰｼｮﾝ(株)",
+    "Country": "Japan",
+    "IsVerified": true,
+    "UniqueId": 1765604,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "nexium solutions ltd",
+    "Country": "Germany",
+    "IsVerified": false,
+    "UniqueId": 1795605,
+    "isOrbisIdFound": false,
+    "suggestion": "nexium solutions ltd LLC"
+  },
+  {
+    "Company": "bio pharma inc",
+    "Country": "United States",
+    "IsVerified": true,
+    "UniqueId": 1825606,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "株式会社住友化学",
+    "Country": "Japan",
+    "IsVerified": true,
+    "UniqueId": 1855607,
+    "isOrbisIdFound": false,
+    "suggestion": "株式会社住友化学 LLC"
+  },
+  {
+    "Company": "medico systems",
+    "Country": "Taiwan",
+    "IsVerified": false,
+    "UniqueId": 1885608,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "pharmaco inc",
+    "Country": "South Korea",
+    "IsVerified": true,
+    "UniqueId": 1915609,
+    "isOrbisIdFound": false,
+    "suggestion": "pharmaco inc LLC"
+  },
+  {
+    "Company": "digital health ltd",
+    "Country": "Great Britain",
+    "IsVerified": true,
+    "UniqueId": 1945610,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "genome therapy labs",
+    "Country": "China",
+    "IsVerified": false,
+    "UniqueId": 1975611,
+    "isOrbisIdFound": false,
+    "suggestion": "genome therapy labs LLC"
+  },
+  {
+    "Company": "インテル株式会社",
+    "Country": "Japan",
+    "IsVerified": true,
+    "UniqueId": 2005612,
+    "isOrbisIdFound": false,
+    "suggestion": "インテル株式会社 LLC"
+  },
+  {
+    "Company": "abc pharma gmbh",
+    "Country": "Germany",
+    "IsVerified": true,
+    "UniqueId": 2035613,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "universal health ltd",
+    "Country": "India",
+    "IsVerified": true,
+    "UniqueId": 2065614,
+    "isOrbisIdFound": false,
+    "suggestion": "universal health ltd LLC"
+  },
+  {
+    "Company": "pharma-genix labs",
+    "Country": "Canada",
+    "IsVerified": true,
+    "UniqueId": 2095615,
+    "isOrbisIdFound": false,
+    "suggestion": "pharma-genix labs LLC"
+  },
+  {
+    "Company": "novatech healthcare",
+    "Country": "United Kingdom",
+    "IsVerified": true,
+    "UniqueId": 2125616,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "biowell pharmaceuticals",
+    "Country": "Australia",
+    "IsVerified": false,
+    "UniqueId": 2155617,
+    "isOrbisIdFound": false,
+    "suggestion": "biowell pharmaceuticals LLC"
+  },
+  {
+    "Company": "アステラス製薬株式会社",
+    "Country": "Japan",
+    "IsVerified": true,
+    "UniqueId": 2185618,
+    "isOrbisIdFound": false,
+    "suggestion": "アステラス製薬株式会社 LLC"
+  },
+  {
+    "Company": "daewoong pharma",
+    "Country": "South Korea",
+    "IsVerified": true,
+    "UniqueId": 2215619,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "unicare health ltd",
+    "Country": "India",
+    "IsVerified": true,
+    "UniqueId": 2245620,
+    "isOrbisIdFound": false,
+    "suggestion": "unicare health ltd LLC"
+  },
+  {
+    "Company": "acme biotech",
+    "Country": "Germany",
+    "IsVerified": true,
+    "UniqueId": 2275621,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "infinity labs",
+    "Country": "United States",
+    "IsVerified": false,
+    "UniqueId": 2305622,
+    "isOrbisIdFound": false,
+    "suggestion": "infinity labs LLC"
+  },
+  {
+    "Company": "healthpro ltd",
+    "Country": "Sweden",
+    "IsVerified": true,
+    "UniqueId": 2335623,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "theratech inc",
+    "Country": "China",
+    "IsVerified": true,
+    "UniqueId": 2365624,
+    "isOrbisIdFound": false,
+    "suggestion": "theratech inc LLC"
+  },
+  {
+    "Company": "fusion healthcare",
+    "Country": "Australia",
+    "IsVerified": false,
+    "UniqueId": 2395625,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "life sciences ltd",
+    "Country": "Great Britain",
+    "IsVerified": true,
+    "UniqueId": 2425626,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "biorise labs",
+    "Country": "China",
+    "IsVerified": false,
+    "UniqueId": 2455627,
+    "isOrbisIdFound": false,
+    "suggestion": "biorise labs LLC"
+  },
+  {
+    "Company": "ナノキャリア株式会社",
+    "Country": "Japan",
+    "IsVerified": true,
+    "UniqueId": 2485628,
+    "isOrbisIdFound": false,
+    "suggestion": "ナノキャリア株式会社 LLC"
+  },
+  {
+    "Company": "universal pharma",
+    "Country": "India",
+    "IsVerified": true,
+    "UniqueId": 2515629,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "precision health ltd",
+    "Country": "Germany",
+    "IsVerified": true,
+    "UniqueId": 2545630,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "newwave biotech",
+    "Country": "South Korea",
+    "IsVerified": false,
+    "UniqueId": 2575631,
+    "isOrbisIdFound": false,
+    "suggestion": "newwave biotech LLC"
+  },
+  {
+    "Company": "lifetime health inc",
+    "Country": "United States",
+    "IsVerified": true,
+    "UniqueId": 2605632,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "biozen pharmaceuticals",
+    "Country": "Sweden",
+    "IsVerified": true,
+    "UniqueId": 2635633,
+    "isOrbisIdFound": false,
+    "suggestion": "biozen pharmaceuticals LLC"
+  },
+  {
+    "Company": "dr. rex ltd",
+    "Country": "Taiwan",
+    "IsVerified": false,
+    "UniqueId": 2665634,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "innovative health solutions",
+    "Country": "Australia",
+    "IsVerified": true,
+    "UniqueId": 2695635,
+    "isOrbisIdFound": false,
+    "suggestion": "innovative health solutions LLC"
+  },
+  {
+    "Company": "日本医薬株式会社",
+    "Country": "Japan",
+    "IsVerified": true,
+    "UniqueId": 2725636,
+    "isOrbisIdFound": false,
+    "suggestion": "日本医薬株式会社 LLC"
+  },
+  {
+    "Company": "vital pharma gmbh",
+    "Country": "Germany",
+    "IsVerified": true,
+    "UniqueId": 2755637,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "zenith health ltd",
+    "Country": "India",
+    "IsVerified": false,
+    "UniqueId": 2785638,
+    "isOrbisIdFound": false,
+    "suggestion": "zenith health ltd LLC"
+  },
+  {
+    "Company": "green health biotech",
+    "Country": "South Korea",
+    "IsVerified": true,
+    "UniqueId": 2815639,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "unimed solutions inc",
+    "Country": "United States",
+    "IsVerified": false,
+    "UniqueId": 2845640,
+    "isOrbisIdFound": false,
+    "suggestion": "unimed solutions inc LLC"
+  },
+  {
+    "Company": "信和药业有限公司",
+    "Country": "China",
+    "IsVerified": true,
+    "UniqueId": 2875641,
+    "isOrbisIdFound": false,
+    "suggestion": "信和药业有限公司 LLC"
+  },
+  {
+    "Company": "biofit healthcare",
+    "Country": "Australia",
+    "IsVerified": true,
+    "UniqueId": 2905642,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  },
+  {
+    "Company": "pharma plus ltd",
+    "Country": "Great Britain",
+    "IsVerified": false,
+    "UniqueId": 2935643,
+    "isOrbisIdFound": false,
+    "suggestion": "pharma plus ltd LLC"
+  },
+  {
+    "Company": "medlink solutions",
+    "Country": "Taiwan",
+    "IsVerified": true,
+    "UniqueId": 2965644,
+    "isOrbisIdFound": true,
+    "suggestion": null
+  }
+]

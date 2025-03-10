@@ -1,0 +1,175 @@
+trigger:
+  branches:
+    include:
+      - develop
+        # Replace with your main branch name
+variables:
+- group: jfrog-motif-crdentials
+- group: Analytics-coe-image-replacement
+# Build ASP.NET Core project using Azure Pipelines
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
+parameters:
+- name : artifactBuildId
+  displayName: Artifact Build Id
+  type: string
+  default: latest
+- name: Build
+  displayName: Build
+  type: boolean
+  default: true
+- name: Deploy
+  displayName: Deploy
+  type: boolean
+  default: false
+
+# define the VM image I want to use for my build
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- ${{ if eq(parameters.Build, true) }}:
+    - stage: Build
+      displayName: Analytics-coe-ui-ens-supplier - Build
+      jobs:
+      - job:
+        steps:
+    #persistCredentials: true
+        #- task: NodeTool@0
+          #inputs:
+            #versionSpec: '20.10.0'
+          #displayName: 'Install Node.js'
+
+   
+
+        - task: npmAuthenticate@0
+          inputs:
+            workingFile: '$(System.DefaultWorkingDirectory)/.npmrc'
+            customEndpoint: 'EYCTPEU_NPM_SERVICE_CONNECTION'
+          displayName: 'Authenticate with Jfrog registry'
+       
+        - task: Docker@2
+          displayName: 'Build UI Image'
+          inputs:
+            containerRegistry: 'Ancoe-DOCKER-Dev'
+            repository: 'analyticscoe-docker-dev/daepensppliersuuiapp'
+            command: 'buildAndPush'
+            Dockerfile: 'Dockerfile'
+            tags: 'v$(Build.BuildNumber)'
+            addPipelineData: false
+            addBaseImageData: false
+
+        - task: PublishPipelineArtifact@1
+          displayName: 'Publish Artifact: Analyticscoe-Dev-UI'
+          inputs:
+            targetPath: '$(System.DefaultWorkingDirectory)'
+            artifact: 'Analyticscoe-Dev-UI'
+            publishLocation: 'pipeline'
+    
+- ${{ if eq(parameters.Deploy, true) }}:
+    - stage: Deploy
+      displayName: Deploy
+      jobs:
+        - deployment: Deploy
+          environment: Development
+          strategy:
+            runOnce:
+              deploy:
+                steps:
+                  - checkout: none
+                  - download: none      
+               
+                  - task: DownloadPipelineArtifact@2
+                    inputs:
+                      buildType: 'current'
+                      artifactName: 'Analyticscoe-Dev-UI'
+                      targetPath: '$(System.DefaultWorkingDirectory)'
+                  - task: qetza.replacetokens.replacetokens-task.replacetokens@5
+                    inputs:
+                      rootDirectory: '.'
+                      targetFiles: '$(System.DefaultWorkingDirectory)/KaaSOrchestration/Dev/UI/Deployment.yaml'
+                      encoding: 'auto'
+                      tokenPattern: 'default'
+                      writeBOM: true
+                      actionOnMissing: 'warn'
+                      keepToken: false
+                      actionOnNoFiles: 'continue'
+                      enableTransforms: false
+                      enableRecursion: false
+                      useLegacyPattern: false
+                      enableTelemetry: true
+
+                  #- task: Kubernetes@1
+                    #displayName: jfrog secrets
+                    #inputs:
+                      #connectionType: 'Kubernetes Service Connection'
+                      #kubernetesServiceEndpoint: 'KAAS_CTI_AI_UAT_CONNECTION'
+                      #command: 'apply'
+                      #useConfigurationFile: true
+                      #configuration: '$(System.DefaultWorkingDirectory)/KaaSOrchestration/UAT/UI/ctiaijfrogsecret.yaml'
+                  - task: Kubernetes@1
+                    displayName: create service 
+                    inputs:
+                      kubernetesServiceEndpoint: 'acoe-dev-kube-st-connection'
+                      namespace: 'acoe-dev-env-apps'
+                      command: 'apply'
+                      useConfigurationFile: true
+                      configuration: '$(System.DefaultWorkingDirectory)/KaaSOrchestration/Dev/UI/service.yaml'  
+                  - task: Kubernetes@1
+                    displayName: API contianer Deploy
+                    inputs:
+                      connectionType: 'Kubernetes Service Connection'
+                      kubernetesServiceEndpoint: 'acoe-dev-kube-st-connection'
+                      namespace: 'acoe-dev-env-apps'
+                      command: 'apply'
+                      useConfigurationFile: true
+                      configuration: '$(System.DefaultWorkingDirectory)/KaaSOrchestration/Dev/UI/ingressancoe.yaml'    
+              
+                  - task: Kubernetes@1
+                    displayName: UI contianer Delete
+                    enabled: false
+                    inputs:
+                      connectionType: 'Kubernetes Service Connection'
+                      kubernetesServiceEndpoint: 'acoe-dev-kube-st-connection'
+                      namespace: 'acoe-dev-env-apps'
+                      command: 'delete'
+                      useConfigurationFile: true
+                      configuration: '$(System.DefaultWorkingDirectory)/KaaSOrchestration/Dev/UI/Deployment.yaml'
+
+                  - task: Kubernetes@1
+                    displayName: API contianer Deploy
+                    inputs:
+                      connectionType: 'Kubernetes Service Connection'
+                      kubernetesServiceEndpoint: 'acoe-dev-kube-st-connection'
+                      namespace: 'acoe-dev-env-apps'
+                      command: 'apply'
+                      useConfigurationFile: true
+                      configuration: '$(System.DefaultWorkingDirectory)/KaaSOrchestration/Dev/UI/Deployment.yaml' 
+
+
+
+           
+ 
+                  
+   
+   ## Copy the client to the staging directory
+
+
+## Archive the files into a zip file for publishing
+#- task: ArchiveFiles@2
+  #inputs:
+    #rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+    #archiveType: 'zip'
+    #archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    #includeRootFolder: false
+
+## Publish the zip file
+#- task: PublishBuildArtifacts@1
+  #inputs:
+    #pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+
+## Copy the client to the staging directory
+#- task: DownloadPipelineArtifact@2
+  #inputs:
+    #buildType: 'current'
+    #artifactName: 'drop'
+    #targetPath: '$(System.DefaultWorkingDirectory)'

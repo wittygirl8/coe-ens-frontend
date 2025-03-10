@@ -1,0 +1,242 @@
+[
+  {
+    "sessionId": "7A4A2ACDBA5E",
+    "triggerDateTime": "2024-11-21T04:47:26Z",
+    "noOfSuppliers": 6,
+    "userId": "David"
+  },
+  {
+    "sessionId": "4816C25C2EA2",
+    "triggerDateTime": "2024-07-31T04:47:26Z",
+    "noOfSuppliers": 7,
+    "userId": "Charlie"
+  },
+  {
+    "sessionId": "74A8EFE75A4A",
+    "triggerDateTime": "2024-09-19T04:47:26Z",
+    "noOfSuppliers": 18,
+    "userId": "Frank"
+  },
+  {
+    "sessionId": "E36846C5DCDB",
+    "triggerDateTime": "2024-04-05T04:47:26Z",
+    "noOfSuppliers": 19,
+    "userId": "Grace"
+  },
+  {
+    "sessionId": "33F3CF0A7E26",
+    "triggerDateTime": "2024-08-06T04:47:26Z",
+    "noOfSuppliers": 6,
+    "userId": "Bob"
+  },
+  {
+    "sessionId": "DB3CF3DF265A",
+    "triggerDateTime": "2024-11-07T04:47:26Z",
+    "noOfSuppliers": 11,
+    "userId": "Bob"
+  },
+  {
+    "sessionId": "124909B5A3FB",
+    "triggerDateTime": "2024-03-13T04:47:26Z",
+    "noOfSuppliers": 6,
+    "userId": "Emma"
+  },
+  {
+    "sessionId": "4BF13D59E936",
+    "triggerDateTime": "2024-08-14T04:47:26Z",
+    "noOfSuppliers": 17,
+    "userId": "Frank"
+  },
+  {
+    "sessionId": "3AD214F8406C",
+    "triggerDateTime": "2024-03-04T04:47:26Z",
+    "noOfSuppliers": 4,
+    "userId": "Frank"
+  },
+  {
+    "sessionId": "A5309576C565",
+    "triggerDateTime": "2024-09-09T04:47:26Z",
+    "noOfSuppliers": 17,
+    "userId": "Charlie"
+  },
+  {
+    "sessionId": "9DAA4AA7956B",
+    "triggerDateTime": "2024-09-21T04:47:26Z",
+    "noOfSuppliers": 20,
+    "userId": "Jack"
+  },
+  {
+    "sessionId": "8821FB800C4A",
+    "triggerDateTime": "2024-10-12T04:47:26Z",
+    "noOfSuppliers": 6,
+    "userId": "David"
+  },
+  {
+    "sessionId": "9DA0593DC14A",
+    "triggerDateTime": "2024-07-22T04:47:26Z",
+    "noOfSuppliers": 18,
+    "userId": "Emma"
+  },
+  {
+    "sessionId": "0A0512CA36A7",
+    "triggerDateTime": "2024-08-28T04:47:26Z",
+    "noOfSuppliers": 8,
+    "userId": "David"
+  },
+  {
+    "sessionId": "52D97E0CC8B9",
+    "triggerDateTime": "2024-04-05T04:47:26Z",
+    "noOfSuppliers": 3,
+    "userId": "Charlie"
+  },
+  {
+    "sessionId": "CA615145578F",
+    "triggerDateTime": "2024-12-25T04:47:26Z",
+    "noOfSuppliers": 18,
+    "userId": "Grace"
+  },
+  {
+    "sessionId": "8A60A42CA7B5",
+    "triggerDateTime": "2024-05-03T04:47:26Z",
+    "noOfSuppliers": 3,
+    "userId": "Bob"
+  },
+  {
+    "sessionId": "D9A0AEA8A503",
+    "triggerDateTime": "2024-09-24T04:47:26Z",
+    "noOfSuppliers": 15,
+    "userId": "Liam"
+  },
+  {
+    "sessionId": "4D7D9EB9D84C",
+    "triggerDateTime": "2024-02-12T04:47:26Z",
+    "noOfSuppliers": 7,
+    "userId": "Bob"
+  },
+  {
+    "sessionId": "9D8C7F1EB381",
+    "triggerDateTime": "2024-04-07T04:47:26Z",
+    "noOfSuppliers": 14,
+    "userId": "Liam"
+  },
+  {
+    "sessionId": "9827460FDE40",
+    "triggerDateTime": "2024-12-04T04:47:26Z",
+    "noOfSuppliers": 7,
+    "userId": "Bob"
+  },
+  {
+    "sessionId": "58D2B0D5C212",
+    "triggerDateTime": "2024-02-21T04:47:26Z",
+    "noOfSuppliers": 8,
+    "userId": "Charlie"
+  },
+  {
+    "sessionId": "9CC2826B056E",
+    "triggerDateTime": "2024-02-01T04:47:26Z",
+    "noOfSuppliers": 3,
+    "userId": "Grace"
+  },
+  {
+    "sessionId": "06229FA2B76E",
+    "triggerDateTime": "2024-04-06T04:47:26Z",
+    "noOfSuppliers": 16,
+    "userId": "Alice"
+  },
+  {
+    "sessionId": "DBD56F7F2DBA",
+    "triggerDateTime": "2024-08-05T04:47:26Z",
+    "noOfSuppliers": 7,
+    "userId": "Liam"
+  },
+  {
+    "sessionId": "ABF79860004A",
+    "triggerDateTime": "2024-07-21T04:47:26Z",
+    "noOfSuppliers": 16,
+    "userId": "Liam"
+  },
+  {
+    "sessionId": "6639E88D710A",
+    "triggerDateTime": "2024-11-29T04:47:26Z",
+    "noOfSuppliers": 5,
+    "userId": "Alice"
+  },
+  {
+    "sessionId": "6B99DB263AD2",
+    "triggerDateTime": "2024-10-27T04:47:26Z",
+    "noOfSuppliers": 8,
+    "userId": "Frank"
+  },
+  {
+    "sessionId": "9EA14B5CA284",
+    "triggerDateTime": "2024-08-28T04:47:26Z",
+    "noOfSuppliers": 8,
+    "userId": "Jack"
+  },
+  {
+    "sessionId": "D7586F041966",
+    "triggerDateTime": "2024-09-05T04:47:26Z",
+    "noOfSuppliers": 2,
+    "userId": "Charlie"
+  },
+  {
+    "sessionId": "A1B2C3D4E5F6",
+    "triggerDateTime": "2024-02-10T12:34:56Z",
+    "noOfSuppliers": 5,
+    "userId": "Alice"
+  },
+  {
+    "sessionId": "G7H8I9J0K1L2",
+    "triggerDateTime": "2024-03-15T08:22:45Z",
+    "noOfSuppliers": 8,
+    "userId": "Bob"
+  },
+  {
+    "sessionId": "M3N4O5P6Q7R8",
+    "triggerDateTime": "2024-01-20T14:11:30Z",
+    "noOfSuppliers": 3,
+    "userId": "Charlie"
+  },
+  {
+    "sessionId": "S9T0U1V2W3X4",
+    "triggerDateTime": "2024-04-05T09:45:12Z",
+    "noOfSuppliers": 6,
+    "userId": "David"
+  },
+  {
+    "sessionId": "Y5Z6A7B8C9D0",
+    "triggerDateTime": "2024-05-18T17:55:40Z",
+    "noOfSuppliers": 2,
+    "userId": "Emma"
+  },
+  {
+    "sessionId": "E1F2G3H4I5J6",
+    "triggerDateTime": "2024-06-25T10:30:20Z",
+    "noOfSuppliers": 9,
+    "userId": "Frank"
+  },
+  {
+    "sessionId": "K7L8M9N0O1P2",
+    "triggerDateTime": "2024-07-12T14:20:55Z",
+    "noOfSuppliers": 4,
+    "userId": "Grace"
+  },
+  {
+    "sessionId": "Q3R4S5T6U7V8",
+    "triggerDateTime": "2024-08-30T19:10:35Z",
+    "noOfSuppliers": 7,
+    "userId": "Henry"
+  },
+  {
+    "sessionId": "W9X0Y1Z2A3B4",
+    "triggerDateTime": "2024-09-14T06:45:10Z",
+    "noOfSuppliers": 1,
+    "userId": "Ivy"
+  },
+  {
+    "sessionId": "C5D6E7F8G9H0",
+    "triggerDateTime": "2024-10-22T23:50:05Z",
+    "noOfSuppliers": 10,
+    "userId": "Jack"
+  }
+]

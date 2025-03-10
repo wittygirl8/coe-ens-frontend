@@ -1,0 +1,30 @@
+{
+  "status": "success",
+  "data": {
+    "total_data": 9,
+    "data": [
+      {
+        "id": 7,
+        "name": "LOL",
+        "name_international": null,
+        "address": null,
+        "postcode": null,
+        "city": null,
+        "country": null,
+        "phone_or_fax": null,
+        "email_or_website": null,
+        "national_id": null,
+        "state": null,
+        "ens_id": "0859d6b6-f99a-4709-8a77-ddecaedae191",
+        "session_id": "9f13fd0b-cffc-4dc9-b52f-8cab45c9086b",
+        "bvd_id": null,
+        "create_time": "2025-01-29T03:26:25.888660Z",
+        "update_time": "2025-01-29T03:26:25.888660Z",
+        "validation_status": "PENDING",
+        "final_status": "ACCEPTED"
+      }
+    ],
+    "session_id": "9f13fd0b-cffc-4dc9-b52f-8cab45c9086b"
+  },
+  "message": "Successfully Retrived Data"
+}
