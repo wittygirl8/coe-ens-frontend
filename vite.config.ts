@@ -8,13 +8,13 @@ export default defineConfig({
     proxy: {
       '/api': {
         // Backend API
-        target: process.env.APPLICATION_BACKEND,
+        target: "https://coe-ens-application-backend.onrender.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
       '/orc-api': {
         // Orchestrator API
-        target: process.env.ANALYSIS_ORCHESTRATION,
+        target: "https://coe-ens-analysis-orchestration.onrender.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/orc-api/, ''),
       },
