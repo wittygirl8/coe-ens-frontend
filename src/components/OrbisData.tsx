@@ -214,13 +214,10 @@ export function OrbisData({ nextStep }: Readonly<{ nextStep: () => void }>) {
     try {
       if (autoAcceptOrReject !== null) {
         // Bulk update when autoAcceptOrReject is provided
-        return await updateSuggestions(
-          '/api/supplier/update-suggestions-bulk',
-          {
-            session_id: sessionId,
-            status: autoAcceptOrReject ? 'accept' : 'reject',
-          },
-        );
+        return await updateSuggestions(API_ENDPOINTS.UPDATE_SUGGESTION_BULK, {
+          session_id: sessionId,
+          status: autoAcceptOrReject ? 'accept' : 'reject',
+        });
       }
 
       const userReviewChanges = Object.entries(localCache.current).map(
@@ -232,7 +229,7 @@ export function OrbisData({ nextStep }: Readonly<{ nextStep: () => void }>) {
 
       if (userReviewChanges.length === 0) {
         await updateSuggestions(
-          `/api/supplier/update-suggestions-single?session_id=${sessionId}`,
+          API_ENDPOINTS.UPDATE_SUGGESTION_SINGLE(sessionId),
           [{ ens_id: '', status: 'accept' }],
         );
       }
@@ -240,7 +237,7 @@ export function OrbisData({ nextStep }: Readonly<{ nextStep: () => void }>) {
       if (userReviewChanges.length > 0) {
         // Single update when user review changes exist
         await updateSuggestions(
-          `/api/supplier/update-suggestions-single?session_id=${sessionId}`,
+          API_ENDPOINTS.UPDATE_SUGGESTION_SINGLE(sessionId),
           userReviewChanges,
         );
       }
