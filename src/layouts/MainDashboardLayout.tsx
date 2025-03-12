@@ -125,13 +125,6 @@ export default function MainDashboardLayout({
                   New Session
                 </UnstyledButton>
                 <UnstyledButton
-                  to={'/analysis-hub'}
-                  component={NavLink}
-                  className={clsx(classes.control)}
-                >
-                  Analysis Hub
-                </UnstyledButton>
-                <UnstyledButton
                   component={NavLink}
                   target='_blank'
                   to={
