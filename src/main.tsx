@@ -14,7 +14,7 @@ import './styles/global.css';
 import NewSession from './pages/NewSession.tsx';
 import Login from './pages/Login.tsx';
 import { theme } from './theme';
-import AnalysisHub from './pages/AnalysisHub.tsx';
+// import AnalysisHub from './pages/AnalysisHub.tsx';
 import { AppProvider } from './contextAPI/AppContext.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './components/ErrorFallback.tsx';
