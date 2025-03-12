@@ -47,7 +47,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             <BrowserRouter>
               <Routes>
                 <Route path='/login' element={<Login />} />
-                <Route path='/analysis-hub' element={<AnalysisHub />} />
+                {/* <Route path='/analysis-hub' element={<AnalysisHub />} /> */}
                 <Route path='/' element={<NewSession />} />
               </Routes>
             </BrowserRouter>
