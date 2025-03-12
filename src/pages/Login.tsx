@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router';
 import classes from '../styles/AuthenticationTitle.module.css';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config';
 
 interface FormValues {
   email: string;
@@ -41,7 +42,8 @@ export default function Login() {
   });
 
   const mutation = useMutation({
-    mutationFn: (payload: FormValues) => axios.post('/api/auth/login', payload),
+    mutationFn: (payload: FormValues) =>
+      axios.post(API_ENDPOINTS.LOGIN, payload),
     onSuccess: (response) => {
       localStorage.setItem('token', response.data.access_token);
       navigate('/');
