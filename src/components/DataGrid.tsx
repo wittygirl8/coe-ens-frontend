@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import axiosInstance from '../utils/axiosInstance';
-import { API_ENDPOINTS } from '../config';
 
 const PAGE_SIZES = [10, 20, 30, 40, 50];
 
@@ -29,10 +28,6 @@ export const DataGrid = <T,>({
       setRecords(data?.data.data);
       return data;
     },
-    staleTime:
-      fetchUrl === API_ENDPOINTS.GET_SESSION_SCREENING_STATUS
-        ? 1000 * 10
-        : Infinity,
   });
 
   if (isError) {

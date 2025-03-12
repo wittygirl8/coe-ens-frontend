@@ -28,19 +28,19 @@ function UserUploadedListConfirmation({
 
   const { sessionId } = useAppContext();
 
-  useQuery<{ data: { supplier_name_validation_status: string } }>({
-    queryKey: [API_ENDPOINTS.SESSION_STATUS(sessionId)],
-    // queryFn: async () => {
-    //   try {
-    //     const { data } = await axiosInstance.get(
-    //       API_ENDPOINTS.SESSION_STATUS(sessionId),
-    //     );
+  useQuery({
+    queryKey: ['supplier-list', sessionId],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosInstance.get(
+          API_ENDPOINTS.SESSION_STATUS(sessionId),
+        );
 
-    //     return data;
-    //   } catch (error) {
-    //     console.error('Error fetching supplier data: jj', error);
-    //   }
-    // },
+        return data;
+      } catch (error) {
+        console.error('Error fetching supplier data: jj', error);
+      }
+    },
     enabled: isLoading,
     refetchInterval: (query) => {
       if (

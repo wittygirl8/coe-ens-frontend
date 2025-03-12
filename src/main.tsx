@@ -18,21 +18,11 @@ import AnalysisHub from './pages/AnalysisHub.tsx';
 import { AppProvider } from './contextAPI/AppContext.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './components/ErrorFallback.tsx';
-import axiosInstance from './utils/axiosInstance.ts';
-
-const defaultQueryFn = async ({
-  queryKey,
-}: {
-  queryKey: readonly unknown[];
-}) => {
-  const { data } = await axiosInstance.get(queryKey[0] as string);
-  return data;
-};
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      queryFn: defaultQueryFn,
+      // staleTime: Infinity,
     },
   },
 });

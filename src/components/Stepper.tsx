@@ -39,7 +39,7 @@ export default function Steps() {
         label='Review Results'
         description='View detailed results and download reports'
       >
-        <Results />
+        <Results sessionId={sessionId} />
       </Stepper.Step>
     </Stepper>
   );

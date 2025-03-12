@@ -13,7 +13,6 @@ import { useQuery } from '@tanstack/react-query';
 import { Supplier } from '../types';
 import axiosInstance from '../utils/axiosInstance';
 import { API_ENDPOINTS } from '../config';
-import { useAppContext } from '../contextAPI/AppContext';
 
 async function downloadReport(
   sessionId: string,
@@ -24,8 +23,8 @@ async function downloadReport(
 ) {
   const url =
     type === 'single'
-      ? API_ENDPOINTS.SINGLE_REPORT_DOWNLOAD(sessionId, ensId, fileType)
-      : API_ENDPOINTS.BULK_REPORT_DOWNLOAD(sessionId);
+      ? `/api/report/download-report/?session_id=${sessionId}&ens_id=${ensId}&type_of_file=${fileType}`
+      : `/api/report/bulk-download-report/?session_id=${sessionId}`;
 
   try {
     const result = await axiosInstance.get(url, { responseType: 'blob' });
@@ -125,9 +124,10 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
   );
 };
 
-export default function Results() {
+export default function Results({
+  sessionId,
+}: Readonly<{ sessionId: string }>) {
   const [records, setRecords] = useState<Supplier[]>([]);
-  const { sessionId } = useAppContext();
 
   const { data, isError } = useQuery({
     queryKey: ['final-session-status-zip-finale', sessionId],
