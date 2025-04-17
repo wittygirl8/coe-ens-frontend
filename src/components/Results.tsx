@@ -101,11 +101,12 @@ export default function Results({
 }>) {
   const [records, setRecords] = useState<Supplier[]>([]);
   const [downloadZip, setDownloadZip] = useState(false);
-  const [status, setStatus] = useState(sessionStatus);
+  const [status, setStatus] = useState('');
 
   const { sessionId: contextSessionId } = useAppContext();
 
   const sessionId = session_id || contextSessionId;
+  const session_status = sessionStatus || status;
 
   const { refetch: refetchZip } = useDownloadReport({
     sessionId,
@@ -186,7 +187,7 @@ export default function Results({
         </Title>
         <Button
           leftSection={
-            status.toLowerCase() === 'failed' ? (
+            session_status.toLowerCase() === 'failed' ? (
               <IconAlertTriangle size={18} stroke={1.5} />
             ) : (
               <IconFileZip size={18} stroke={1.5} />
@@ -195,10 +196,10 @@ export default function Results({
           mb="sm"
           pr={12}
           variant="gradient"
-          disabled={status.toLowerCase() !== 'completed'}
+          disabled={session_status.toLowerCase() !== 'completed'}
           onClick={() => setDownloadZip(true)}
         >
-          {status.toLowerCase() === 'failed'
+          {session_status.toLowerCase() === 'failed'
             ? 'Failed to Generate'
             : 'Download All as ZIP'}
         </Button>
