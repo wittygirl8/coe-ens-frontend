@@ -23,12 +23,14 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
-    "react-router": "^7.1.5"
+    "react-router": "^7.1.5",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@types/node": "^22.13.9",
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
+    "@types/socket.io-client": "^3.0.0",
     "@vitejs/plugin-react": "^4.3.4",
     "postcss": "^8.5.1",
     "postcss-preset-mantine": "1.17.0",
