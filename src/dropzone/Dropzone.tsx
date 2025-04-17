@@ -39,7 +39,7 @@ export default function DropzoneButton({ nextStep }: { nextStep: () => void }) {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-        },
+        }
       );
 
       setSessionId(data.data.session_id);
@@ -66,13 +66,13 @@ export default function DropzoneButton({ nextStep }: { nextStep: () => void }) {
 
   return (
     <div className={classes.wrapper}>
-      <Card shadow='sm' p='md' radius='md' maw={'50em'} m='auto' withBorder>
+      <Card shadow="sm" p="md" radius="md" maw={'50em'} m="auto" withBorder>
         <Card.Section>
           <Dropzone
             openRef={openRef}
             onDrop={handleDrop}
             className={classes.dropzone}
-            radius='md'
+            radius="md"
             accept={[MIME_TYPES.xlsx]}
             maxSize={30 * 1024 ** 2}
             multiple={false}
@@ -81,7 +81,7 @@ export default function DropzoneButton({ nextStep }: { nextStep: () => void }) {
             loading={loading}
           >
             <div style={{ pointerEvents: 'none' }}>
-              <Group justify='center'>
+              <Group justify="center">
                 <Dropzone.Accept>
                   <IconDownload
                     size={50}
@@ -97,17 +97,17 @@ export default function DropzoneButton({ nextStep }: { nextStep: () => void }) {
                 </Dropzone.Idle>
               </Group>
 
-              <Text ta='center' fw={700} fz='lg' mt='xs'>
+              <Text ta="center" fw={700} fz="lg" mt="xs">
                 <Dropzone.Accept>Drop files here</Dropzone.Accept>
                 <Dropzone.Reject>
                   Upload Single Excel file less than 30mb
                 </Dropzone.Reject>
-                <Dropzone.Idle>Upload Vendor List</Dropzone.Idle>
+                <Dropzone.Idle>Upload Entity List</Dropzone.Idle>
               </Text>
-              <Text ta='center' fz='sm' mt='xs' c='dimmed'>
+              <Text ta="center" fz="sm" mt="xs" c="dimmed">
                 Drag&apos;n&apos;drop file here to upload. We can accept only
                 excel
-                <Text component='i'>(.xlsx)</Text> files that are less than 30mb
+                <Text component="i">(.xlsx)</Text> files that are less than 30mb
                 in size.
               </Text>
             </div>
@@ -118,9 +118,9 @@ export default function DropzoneButton({ nextStep }: { nextStep: () => void }) {
           <Flex justify={'center'}>
             <Button
               className={classes.control}
-              size='md'
-              mt='xs'
-              radius='xl'
+              size="md"
+              mt="xs"
+              radius="xl"
               onClick={() => openRef.current?.()}
             >
               Select File

@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActionIcon, Box, Button, Group, LoadingOverlay } from '@mantine/core';
 import { IconLock } from '@tabler/icons-react';
+import { io } from 'socket.io-client';
 
 import { useAppContext } from '../contextAPI/AppContext';
 import { DataGrid } from './DataGrid';
-import { useQuery } from '@tanstack/react-query';
 import axiosInstance from '../utils/axiosInstance';
-import { API_ENDPOINTS } from '../config';
+import { API_ENDPOINTS, ORBIS_URL } from '../config';
 
 const columns = [
   { accessor: 'uploaded_name', title: 'Name' },
@@ -20,6 +20,8 @@ const columns = [
   { accessor: 'uploaded_phone_or_fax', title: 'Phone or Fax' },
 ];
 
+const socket = io(ORBIS_URL);
+
 function UserUploadedListConfirmation({
   nextStep,
 }: Readonly<{ nextStep: () => void }>) {
@@ -28,32 +30,49 @@ function UserUploadedListConfirmation({
 
   const { sessionId } = useAppContext();
 
-  useQuery<{ data: { supplier_name_validation_status: string } }>({
-    queryKey: [API_ENDPOINTS.SESSION_STATUS(sessionId)],
-    // queryFn: async () => {
-    //   try {
-    //     const { data } = await axiosInstance.get(
-    //       API_ENDPOINTS.SESSION_STATUS(sessionId),
-    //     );
+  useEffect(() => {
+    socket.on('session-status', (data) => {
+      if (data.session_id !== sessionId) return;
 
-    //     return data;
-    //   } catch (error) {
-    //     console.error('Error fetching supplier data: jj', error);
-    //   }
-    // },
-    enabled: isLoading,
-    refetchInterval: (query) => {
-      if (
-        query.state.data?.data.supplier_name_validation_status === 'COMPLETED'
-      ) {
+      if (data.supplier_name_validation_status === 'COMPLETED') {
         setIsLoading(false);
         nextStep();
-        return false;
       }
 
-      return 5000; // 5 seconds
-    },
-  });
+      // setStatus(data.overall_status);
+    });
+
+    return () => {
+      socket.off('session-status');
+    };
+  }, []);
+
+  // useQuery<{ data: { supplier_name_validation_status: string } }>({
+  //   queryKey: [API_ENDPOINTS.SESSION_STATUS(sessionId)],
+  //   // queryFn: async () => {
+  //   //   try {
+  //   //     const { data } = await axiosInstance.get(
+  //   //       API_ENDPOINTS.SESSION_STATUS(sessionId),
+  //   //     );
+
+  //   //     return data;
+  //   //   } catch (error) {
+  //   //     console.error('Error fetching supplier data: jj', error);
+  //   //   }
+  //   // },
+  //   enabled: isLoading,
+  //   refetchInterval: (query) => {
+  //     if (
+  //       query.state.data?.data.supplier_name_validation_status === 'COMPLETED'
+  //     ) {
+  //       setIsLoading(false);
+  //       nextStep();
+  //       return false;
+  //     }
+
+  //     return 5000; // 5 seconds
+  //   },
+  // });
 
   const handleClick = async () => {
     try {
@@ -62,7 +81,7 @@ function UserUploadedListConfirmation({
         session_id: sessionId,
       });
     } catch (error) {
-      console.error('Error validating supplier list:', error);
+      console.error('Error validating entity list:', error);
     }
   };
 
@@ -73,7 +92,7 @@ function UserUploadedListConfirmation({
           visible={isLoading}
           loaderProps={{
             children: (
-              <ActionIcon variant='subtle' color='black'>
+              <ActionIcon variant="subtle" color="black">
                 <IconLock size={40} />
               </ActionIcon>
             ),
@@ -83,14 +102,18 @@ function UserUploadedListConfirmation({
           fetchUrl={API_ENDPOINTS.GET_SUPPLIER_DATA(sessionId)}
           records={records}
           setRecords={setRecords}
-          columns={columns}
-          height='50dvh'
-          idAccessor='id'
+          columns={columns.map((column) => ({
+            ...column,
+            noWrap: true,
+            ellipsis: undefined, // Ensure ellipsis is explicitly set to undefined
+          }))}
+          // maxHeight='60dvh'
+          idAccessor="id"
         />
       </Box>
-      <Group justify='end' mt='xl'>
+      <Group justify="end" mt="xl">
         <Button onClick={handleClick} loading={isLoading}>
-          Validate Uploaded Supplier List
+          Validate Uploaded Entity List
         </Button>
       </Group>
     </>

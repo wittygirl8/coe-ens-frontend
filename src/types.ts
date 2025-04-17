@@ -20,5 +20,13 @@ export type Supplier = {
   suggested_phone_or_fax: string;
   isCompleted: boolean;
   overall_status: 'COMPLETED' | 'IN_PROGRESS';
+  final_validation_status: 'AUTO_ACCEPT' | 'AUTO_REJECT' | 'REVIEW';
   orbis_matched_status: 'MATCH' | 'NO_MATCH';
+  duplicate_in_session: 'RETAIN' | 'REMOVE' | 'UNIQUE';
+  validation_status: 'VALIDATED' | 'NOT_VALIDATED' | 'PENDING';
+  report_generation_status:
+    | 'COMPLETED'
+    | 'IN_PROGRESS'
+    | 'FAILED'
+    | 'NOT_STARTED';
 };

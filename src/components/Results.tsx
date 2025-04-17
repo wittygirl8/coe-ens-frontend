@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { DataGrid } from './DataGrid';
+import { useEffect, useState } from 'react';
 import { ActionIcon, Button, Flex, Title } from '@mantine/core';
 import {
   IconAlertTriangle,
@@ -8,116 +7,83 @@ import {
   IconFileZip,
 } from '@tabler/icons-react';
 import { DataTableColumn } from 'mantine-datatable';
-import { useQuery } from '@tanstack/react-query';
+import { io } from 'socket.io-client';
 
 import { Supplier } from '../types';
-import axiosInstance from '../utils/axiosInstance';
-import { API_ENDPOINTS } from '../config';
+import { API_ENDPOINTS, ORBIS_URL } from '../config';
 import { useAppContext } from '../contextAPI/AppContext';
+import { useDownloadReport } from '../hooks/useDownloadReport';
+import { DataGrid } from './DataGrid';
 
-async function downloadReport(
-  sessionId: string,
-  ensId: string = '',
-  fileType: 'pdf' | 'docx' | 'zip' = 'pdf',
-  type: 'single' | 'bulk' = 'single',
-  fileName: string = 'report',
-) {
-  const url =
-    type === 'single'
-      ? API_ENDPOINTS.SINGLE_REPORT_DOWNLOAD(sessionId, ensId, fileType)
-      : API_ENDPOINTS.BULK_REPORT_DOWNLOAD(sessionId);
-
-  try {
-    const result = await axiosInstance.get(url, { responseType: 'blob' });
-    const blob = result.data;
-
-    // Create a downloadable link and trigger a click
-    const fileUrl = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = fileUrl;
-    a.download = `${fileName}.${fileType}`; // Set the file name dynamically
-    document.body.appendChild(a);
-    a.click();
-
-    // Cleanup
-    window.URL.revokeObjectURL(fileUrl);
-    document.body.removeChild(a);
-  } catch (error) {
-    console.error('Error downloading report:', error);
-  }
-}
+const socket = io(ORBIS_URL);
 
 interface DownloadButtonProps {
   sessionId: string;
   ensId: string;
   name: string;
+  status: string;
 }
 
 const DownloadButton: React.FC<DownloadButtonProps> = ({
   sessionId,
   ensId,
   name,
+  status,
 }) => {
-  const { data, isError } = useQuery({
-    queryKey: ['final-ensid-status', sessionId, ensId],
-    queryFn: async ({ signal }) => {
-      const { data } = await axiosInstance.get(
-        API_ENDPOINTS.ENS_ID_STATUS(sessionId, ensId),
-        { signal },
-      );
+  const [shouldDownload, setShouldDownload] = useState<{
+    fileType: 'pdf' | 'docx';
+  } | null>(null);
 
-      return data;
-    },
-    enabled: !!sessionId,
-    refetchInterval: (query) => {
-      const status = query.state.data?.data.overall_status;
-      if (status === 'COMPLETED' || status === 'FAILED') {
-        return false;
-      }
-
-      return 15 * 1000; // 15 seconds
-    },
+  const { refetch, isFetching } = useDownloadReport({
+    sessionId,
+    ensId,
+    fileType: shouldDownload?.fileType ?? 'pdf',
+    type: 'single',
+    fileName: name,
+    enabled: !!shouldDownload,
   });
 
-  if (isError) {
-    throw new Error('Error fetching data');
-  }
+  useEffect(() => {
+    if (shouldDownload) {
+      refetch().finally(() => setShouldDownload(null));
+    }
+  }, [shouldDownload, refetch]);
 
-  const status = data?.data.overall_status;
-
-  if (status === 'FAILED')
-    return (
-      <ActionIcon variant='subtle' color='gray' title='Failed to Generate...'>
-        <IconAlertTriangle size={20} stroke={1.5} />
-      </ActionIcon>
-    );
-
-  if (status !== 'COMPLETED')
+  if (status === 'NOT_STARTED') {
     return (
       <ActionIcon
         loading
-        variant='subtle'
-        color='gray'
-        title='Generating the document...'
+        variant="subtle"
+        color="gray"
+        title="Generating the document..."
       />
     );
+  } else if (status === 'FAILED') {
+    return (
+      <ActionIcon variant="subtle" color="gray" title="Failed to Generate...">
+        <IconAlertTriangle size={20} stroke={1.5} />
+      </ActionIcon>
+    );
+  }
 
   return (
-    <Flex align='center' justify='center' gap={4}>
+    <Flex align="center" justify="center" gap={4}>
       <ActionIcon
-        onClick={() => downloadReport(sessionId, ensId, 'pdf', 'single', name)}
-        variant='subtle'
-        color='gray'
-        title='Download PDF'
+        onClick={() => setShouldDownload({ fileType: 'pdf' })}
+        variant="subtle"
+        color="gray"
+        title="Download PDF"
+        disabled={isFetching && shouldDownload?.fileType === 'pdf'}
       >
         <IconFileTypePdf size={20} stroke={1.5} />
       </ActionIcon>
 
       <ActionIcon
-        onClick={() => downloadReport(sessionId, ensId, 'docx', 'single', name)}
-        variant='subtle'
-        color='gray'
-        title='Download DOCX'
+        onClick={() => setShouldDownload({ fileType: 'docx' })}
+        variant="subtle"
+        color="gray"
+        title="Download DOCX"
+        disabled={isFetching && shouldDownload?.fileType === 'docx'}
       >
         <IconFileTypeDocx size={20} stroke={1.5} />
       </ActionIcon>
@@ -125,29 +91,66 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
   );
 };
 
-export default function Results() {
+export default function Results({
+  sessionId: session_id = '',
+  sessionStatus = 'NOT_STARTED',
+}: Readonly<{
+  sessionId?: string;
+  sessionStatus?: 'COMPLETED' | 'FAILED' | 'IN-PROGRESS' | 'NOT_STARTED';
+}>) {
   const [records, setRecords] = useState<Supplier[]>([]);
-  const { sessionId } = useAppContext();
+  const [downloadZip, setDownloadZip] = useState(false);
+  const [status, setStatus] = useState(sessionStatus);
 
-  const { data, isError } = useQuery({
-    queryKey: ['final-session-status-zip-finale', sessionId],
-    queryFn: async ({ signal }) => {
-      const { data } = await axiosInstance.get(
-        API_ENDPOINTS.SESSION_STATUS(sessionId),
-        { signal },
-      );
+  const { sessionId: contextSessionId } = useAppContext();
 
-      return data;
-    },
-    refetchInterval: (query) => {
-      const status = query.state.data?.data.overall_status;
-      if (status === 'COMPLETED' || status === 'FAILED') {
-        return false;
-      }
+  const sessionId = session_id || contextSessionId;
 
-      return 15 * 1000; // 15 seconds
-    },
+  const { refetch: refetchZip } = useDownloadReport({
+    sessionId,
+    type: 'bulk',
+    fileType: 'zip',
+    fileName: 'all-reports',
+    enabled: downloadZip,
   });
+
+  useEffect(() => {
+    if (downloadZip) {
+      refetchZip().finally(() => setDownloadZip(false));
+    }
+  }, [downloadZip, refetchZip]);
+
+  useEffect(() => {
+    socket.on('report-status', (data) => {
+      setRecords((prevRecords) => {
+        const recordIndex = prevRecords.findIndex(
+          (record) => record.ens_id === data.ens_id
+        );
+
+        if (recordIndex !== -1) {
+          const updatedRecords = [...prevRecords];
+          updatedRecords[recordIndex] = {
+            ...updatedRecords[recordIndex],
+            report_generation_status: data.report_status,
+          };
+          return updatedRecords;
+        }
+        return prevRecords;
+      });
+    });
+
+    socket.on('session-status', (data) => {
+      if (data.session_id !== sessionId) return;
+      setStatus(data.overall_status);
+    });
+
+    return () => {
+      socket.off('report-status');
+      socket.off('session-status');
+    };
+  }, [sessionId]);
+
+  if (!sessionId) return null;
 
   const columns: Array<DataTableColumn<Supplier>> = [
     { accessor: 'name', title: 'Name' },
@@ -163,53 +166,55 @@ export default function Results() {
       accessor: 'download',
       title: 'Download',
       textAlign: 'center',
-      render: ({ ens_id, name }) => (
-        <DownloadButton sessionId={sessionId} ensId={ens_id} name={name} />
+      render: ({ ens_id, name, report_generation_status }) => (
+        <DownloadButton
+          sessionId={sessionId}
+          ensId={ens_id}
+          name={name}
+          status={report_generation_status}
+        />
       ),
     },
   ];
 
-  if (isError) {
-    throw new Error('Error fetching data');
-  }
-
-  const status = data?.data.overall_status;
-
   return (
     <div>
-      <Flex justify='space-between' align='center'>
-        <Title order={3} fw={500} mb='md'>
+      <Flex justify="space-between" align="center">
+        <Title order={3} fw={500} mb="md">
           Results
         </Title>
         <Button
           leftSection={
-            <>
-              {status === 'Failed' ? (
-                <IconAlertTriangle size={18} stroke={1.5} />
-              ) : (
-                <IconFileZip size={18} stroke={1.5} />
-              )}
-            </>
+            status.toLowerCase() === 'failed' ? (
+              <IconAlertTriangle size={18} stroke={1.5} />
+            ) : (
+              <IconFileZip size={18} stroke={1.5} />
+            )
           }
-          mb='sm'
+          mb="sm"
           pr={12}
-          variant='gradient'
-          disabled={data?.data.overall_status !== 'COMPLETED'}
-          onClick={() => {
-            downloadReport(sessionId, '', 'zip', 'bulk', 'all-reports');
-          }}
+          variant="gradient"
+          disabled={status.toLowerCase() !== 'completed'}
+          onClick={() => setDownloadZip(true)}
         >
-          {status === 'Failed' ? 'Failed to Generate' : 'Download All as ZIP'}
+          {status.toLowerCase() === 'failed'
+            ? 'Failed to Generate'
+            : 'Download All as ZIP'}
         </Button>
       </Flex>
       <DataGrid
         records={records}
         setRecords={setRecords}
         fetchUrl={API_ENDPOINTS.GET_MAIN_SUPPLIER_DATA(sessionId)}
-        columns={columns}
-        idAccessor='ens_id'
-        height='60dvh'
+        columns={columns.map((column) => ({
+          ...column,
+          noWrap: true,
+          ellipsis: undefined, // Ensure ellipsis is explicitly set to undefined
+        }))}
+        idAccessor="ens_id"
+        height="60dvh"
         pinLastColumn
+        staleTime={1}
       />
     </div>
   );

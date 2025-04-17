@@ -1,39 +1,40 @@
 import { DataTable, DataTableProps } from 'mantine-datatable';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import axiosInstance from '../utils/axiosInstance';
-import { API_ENDPOINTS } from '../config';
-
-const PAGE_SIZES = [10, 20, 30, 40, 50];
+import { usePagination } from '../hooks/usePagination';
 
 type DataGridProps<T> = DataTableProps<T> & {
   fetchUrl: string;
   setRecords: (records: T[]) => void;
+  staleTime?: number;
 };
 
 export const DataGrid = <T,>({
   fetchUrl,
   setRecords,
+  staleTime,
   ...rest
 }: DataGridProps<T>) => {
-  const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
-  const [page, setPage] = useState(1);
+  const { page, setPage, pageSize, setPageSize, PAGE_SIZES } = usePagination();
 
   const { isFetching, data, isError, error } = useQuery({
-    queryKey: ['dataGrid', fetchUrl, page, pageSize], // Unique cache key
+    queryKey: ['dataGrid', fetchUrl, page, pageSize],
     queryFn: async () => {
       const separator = fetchUrl.includes('?') ? '&' : '?';
-      const url = `${fetchUrl}${separator}page=${page - 1}&limit=${pageSize}`;
+      const url = `${fetchUrl}${separator}page_no=${page}&rows_per_page=${pageSize}`;
       const { data } = await axiosInstance.get(url);
-      setRecords(data?.data.data);
       return data;
     },
-    staleTime:
-      fetchUrl === API_ENDPOINTS.GET_SESSION_SCREENING_STATUS
-        ? 1000 * 10
-        : Infinity,
+    staleTime: staleTime ? 1000 * staleTime : Infinity,
   });
+
+  useEffect(() => {
+    if (data?.data.data) {
+      setRecords(data?.data.data);
+    }
+  }, [data]);
 
   if (isError) {
     throw new Error(`Error fetching data: ${error.message}`);
@@ -41,17 +42,19 @@ export const DataGrid = <T,>({
 
   return (
     <DataTable
-      shadow='sm'
+      shadow="sm"
       minHeight={400}
-      maxHeight={800}
       fetching={isFetching}
       withTableBorder
       totalRecords={data?.data.total_data}
       recordsPerPage={pageSize}
       page={page}
-      onPageChange={setPage}
+      onPageChange={(page) => setPage(page)}
       recordsPerPageOptions={PAGE_SIZES}
-      onRecordsPerPageChange={setPageSize}
+      onRecordsPerPageChange={(val) => {
+        setPage(1);
+        setPageSize(val);
+      }}
       paginationText={({ from, to, totalRecords }) =>
         `Showing ${from} - ${to} of ${totalRecords} results`
       }

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 import { Notifications } from '@mantine/notifications';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MantineProvider } from '@mantine/core';
@@ -14,11 +14,13 @@ import './styles/global.css';
 import NewSession from './pages/NewSession.tsx';
 import Login from './pages/Login.tsx';
 import { theme } from './theme';
-// import AnalysisHub from './pages/AnalysisHub.tsx';
+import AnalysisHub from './pages/AnalysisHub.tsx';
 import { AppProvider } from './contextAPI/AppContext.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './components/ErrorFallback.tsx';
 import axiosInstance from './utils/axiosInstance.ts';
+import Steps from './components/Stepper.tsx';
+import NotFound from './pages/NotFound.tsx';
 
 const defaultQueryFn = async ({
   queryKey,
@@ -37,6 +39,31 @@ export const queryClient = new QueryClient({
   },
 });
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <NewSession />,
+    children: [
+      { path: 'steps', element: <Steps />, errorElement: <ErrorFallback /> },
+    ],
+    errorElement: <ErrorFallback />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/analysis-hub',
+    element: <AnalysisHub />,
+    errorElement: <ErrorFallback />,
+  },
+  // Catch-all route for 404 pages
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+]);
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <MantineProvider theme={theme}>
@@ -44,16 +71,10 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <QueryClientProvider client={queryClient}>
         <AppProvider>
           <ErrorBoundary fallback={<ErrorFallback />}>
-            <BrowserRouter>
-              <Routes>
-                <Route path='/login' element={<Login />} />
-                {/* <Route path='/analysis-hub' element={<AnalysisHub />} /> */}
-                <Route path='/' element={<NewSession />} />
-              </Routes>
-            </BrowserRouter>
+            <RouterProvider router={router} />
           </ErrorBoundary>
         </AppProvider>
       </QueryClientProvider>
     </MantineProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

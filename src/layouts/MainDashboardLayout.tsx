@@ -22,13 +22,14 @@ import {
 
 import classes from '../styles/MobileNavbar.module.css';
 import { NavLink, useNavigate } from 'react-router';
+import { useAppContext } from '../contextAPI/AppContext';
 
 function UserMenu() {
   const { setColorScheme } = useMantineColorScheme();
   const navigate = useNavigate();
 
   return (
-    <Menu shadow='md' width={200} withArrow position='bottom-end' zIndex={2000}>
+    <Menu shadow="md" width={200} withArrow position="bottom-end" zIndex={2000}>
       <Menu.Target>
         <Avatar style={{ cursor: 'pointer' }} />
       </Menu.Target>
@@ -75,11 +76,40 @@ function UserMenu() {
   );
 }
 
+const NewSessionButton = () => {
+  const { activeStep, setActiveStep } = useAppContext();
+
+  const handleClick = () => {
+    if (activeStep !== 0 && activeStep < 3) {
+      const confirmLeave = window.confirm(
+        'You’re in the middle of a process. Leaving now will discard your progress. Continue?'
+      );
+
+      if (!confirmLeave) return;
+    }
+
+    if (activeStep !== 0) {
+      setActiveStep(0);
+    }
+  };
+
+  return (
+    <UnstyledButton
+      onClick={handleClick}
+      className={clsx(classes.control)}
+      component={NavLink}
+      to="/"
+    >
+      New Session
+    </UnstyledButton>
+  );
+};
+
 export default function MainDashboardLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   const [opened, { toggle }] = useDisclosure();
 
   return (
@@ -90,43 +120,45 @@ export default function MainDashboardLayout({
         breakpoint: 'sm',
         collapsed: { desktop: true, mobile: !opened },
       }}
-      padding='md'
+      padding="md"
     >
       <AppShell.Header>
         <Container size={'105rem'}>
-          <Group h='100%'>
+          <Group h="100%">
             <Burger
               opened={opened}
               onClick={toggle}
-              hiddenFrom='sm'
-              size='sm'
+              hiddenFrom="sm"
+              size="sm"
             />
-            <Group justify='space-between' style={{ flex: 1 }}>
+            <Group justify="space-between" style={{ flex: 1 }}>
               <Text
-                size='xl'
+                size="xl"
                 fw={700}
-                variant='gradient'
+                variant="gradient"
                 ta={'center'}
-                tt='uppercase'
-                lts='1px'
+                tt="uppercase"
+                lts="1px"
                 gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
                 component={NavLink}
                 style={{ border: 'none' }}
-                to='/'
+                to="/"
               >
-                ENS - Supplier Screening
+                ENS - Entity Screening
               </Text>
-              <Group ml='xl' gap={0} visibleFrom='sm'>
+              <Group ml="xl" gap={0} visibleFrom="sm">
+                <NewSessionButton />
+
                 <UnstyledButton
-                  className={clsx(classes.control)}
-                  to={'/'}
+                  to={'/analysis-hub'}
                   component={NavLink}
+                  className={clsx(classes.control)}
                 >
-                  New Session
+                  Analysis Hub
                 </UnstyledButton>
                 <UnstyledButton
                   component={NavLink}
-                  target='_blank'
+                  target="_blank"
                   to={
                     'https://app.powerbi.com/groups/me/reports/b2cf46fe-88fe-4702-a68e-2fb4a9095010/5303e6a3795016306840?experience=power-bi'
                   }
@@ -141,30 +173,30 @@ export default function MainDashboardLayout({
         </Container>
       </AppShell.Header>
 
-      <AppShell.Main className='custom-background'>
+      <AppShell.Main className="custom-background">
         <Container size={'105rem'}>{children}</Container>
       </AppShell.Main>
-      <AppShell.Footer p='md'>
+      <AppShell.Footer p="md">
         <Container size={'105rem'}>
-          <Flex gap='md' justify={'space-between'} align='center'>
-            <Text size='xs' ta={'right'}>
-              &copy; {new Date().getFullYear()} ENS - Supplier Screening. All
+          <Flex gap="md" justify={'space-between'} align="center">
+            <Text size="xs" ta={'right'}>
+              &copy; {new Date().getFullYear()} ENS - Entity Screening. All
               rights reserved.
             </Text>
-            <Flex gap='xl'>
+            <Flex gap="xl">
               <Text
-                size='xs'
+                size="xs"
                 component={'a'}
-                href='https://coe-poc-frontend.onrender.com/'
-                target='_blank'
+                href="https://coe-poc-frontend.onrender.com/"
+                target="_blank"
               >
                 ENS - 2 Sents!
               </Text>
               <Text
-                size='xs'
+                size="xs"
                 component={'a'}
-                href='https://eyapp.southindia.cloudapp.azure.com/hrtp/'
-                target='_blank'
+                href="https://eyapp.southindia.cloudapp.azure.com/hrtp/"
+                target="_blank"
               >
                 HRTP
               </Text>
