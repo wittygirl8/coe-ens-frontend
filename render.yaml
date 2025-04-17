@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: coe-ens-frontend
+    env: node
+    buildCommand: >
+      rm -rf node_modules yarn.lock package-lock.json &&
+      yarn cache clean --all &&
+      yarn install --immutable &&
+      yarn build
+    startCommand: yarn dev
