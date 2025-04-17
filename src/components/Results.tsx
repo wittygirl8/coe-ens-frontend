@@ -73,7 +73,8 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
         variant="subtle"
         color="gray"
         title="Download PDF"
-        disabled={isFetching && shouldDownload?.fileType === 'pdf'}
+        disabled
+        // disabled={isFetching && shouldDownload?.fileType === 'pdf'}
       >
         <IconFileTypePdf size={20} stroke={1.5} />
       </ActionIcon>
