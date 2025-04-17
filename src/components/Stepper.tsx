@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Stepper, Space } from '@mantine/core';
 import { unstable_usePrompt } from 'react-router';
 
