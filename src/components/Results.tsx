@@ -105,8 +105,8 @@ export default function Results({
 
   const { sessionId: contextSessionId } = useAppContext();
 
-  const sessionId = session_id || contextSessionId;
-  const session_status = sessionStatus || status;
+  const sessionId = session_id ?? contextSessionId;
+  const session_status = status ?? sessionStatus;
 
   const { refetch: refetchZip } = useDownloadReport({
     sessionId,
