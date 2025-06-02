@@ -9,6 +9,8 @@ import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import 'mantine-datatable/styles.css';
 import '@mantine/dropzone/styles.css';
+import '@mantine/charts/styles.css';
+import '@react-sigma/core/lib/style.css';
 import './styles/global.css';
 
 import NewSession from './pages/NewSession.tsx';
@@ -21,6 +23,7 @@ import ErrorFallback from './components/ErrorFallback.tsx';
 import axiosInstance from './utils/axiosInstance.ts';
 import Steps from './components/Stepper.tsx';
 import NotFound from './pages/NotFound.tsx';
+import NetworkGraph from './pages/NetworkGraph.tsx';
 
 const defaultQueryFn = async ({
   queryKey,
@@ -41,7 +44,7 @@ export const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/new-session',
     element: <NewSession />,
     children: [
       { path: 'steps', element: <Steps />, errorElement: <ErrorFallback /> },
@@ -55,6 +58,11 @@ const router = createBrowserRouter([
   {
     path: '/analysis-hub',
     element: <AnalysisHub />,
+    errorElement: <ErrorFallback />,
+  },
+  {
+    path: '/',
+    element: <NetworkGraph />,
     errorElement: <ErrorFallback />,
   },
   // Catch-all route for 404 pages

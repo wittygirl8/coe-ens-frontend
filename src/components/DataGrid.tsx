@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import axiosInstance from '../utils/axiosInstance';
 import { usePagination } from '../hooks/usePagination';
+import { ActionIcon, Badge, Box, LoadingOverlay } from '@mantine/core';
+import { IconAlertTriangle } from '@tabler/icons-react';
 
 type DataGridProps<T> = DataTableProps<T> & {
   fetchUrl: string;
@@ -19,7 +21,7 @@ export const DataGrid = <T,>({
 }: DataGridProps<T>) => {
   const { page, setPage, pageSize, setPageSize, PAGE_SIZES } = usePagination();
 
-  const { isFetching, data, isError, error } = useQuery({
+  const { isFetching, data, isError } = useQuery({
     queryKey: ['dataGrid', fetchUrl, page, pageSize],
     queryFn: async () => {
       const separator = fetchUrl.includes('?') ? '&' : '?';
@@ -36,29 +38,46 @@ export const DataGrid = <T,>({
     }
   }, [data]);
 
-  if (isError) {
-    throw new Error(`Error fetching data: ${error.message}`);
-  }
-
   return (
-    <DataTable
-      shadow="sm"
-      minHeight={400}
-      fetching={isFetching}
-      withTableBorder
-      totalRecords={data?.data.total_data}
-      recordsPerPage={pageSize}
-      page={page}
-      onPageChange={(page) => setPage(page)}
-      recordsPerPageOptions={PAGE_SIZES}
-      onRecordsPerPageChange={(val) => {
-        setPage(1);
-        setPageSize(val);
-      }}
-      paginationText={({ from, to, totalRecords }) =>
-        `Showing ${from} - ${to} of ${totalRecords} results`
-      }
-      {...rest}
-    />
+    <Box pos="relative">
+      <LoadingOverlay
+        visible={isError}
+        loaderProps={{
+          children: (
+            <Badge
+              color="red"
+              variant="subtle"
+              leftSection={
+                <ActionIcon variant="subtle" color="red" size={'xs'}>
+                  <IconAlertTriangle size={16} />
+                </ActionIcon>
+              }
+            >
+              Failed to fetch data
+            </Badge>
+          ),
+        }}
+      />
+
+      <DataTable
+        shadow="sm"
+        minHeight={400}
+        fetching={isFetching}
+        withTableBorder
+        totalRecords={data?.data.total_data}
+        recordsPerPage={pageSize}
+        page={page}
+        onPageChange={(page) => setPage(page)}
+        recordsPerPageOptions={PAGE_SIZES}
+        onRecordsPerPageChange={(val) => {
+          setPage(1);
+          setPageSize(val);
+        }}
+        paginationText={({ from, to, totalRecords }) =>
+          `Showing ${from} - ${to} of ${totalRecords} results`
+        }
+        {...rest}
+      />
+    </Box>
   );
 };

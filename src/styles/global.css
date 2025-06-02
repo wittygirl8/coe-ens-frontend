@@ -15,3 +15,50 @@
 .custom-background {
   background-color: light-dark(var(--mantine-color-lightBlue-0), #000);
 }
+
+.custom-label {
+  display: inline-block;
+  font-weight: 500;
+  word-break: break-word;
+  cursor: inherit;
+  -webkit-tap-highlight-color: transparent;
+  font-size: var(--input-label-size, var(--mantine-font-size-sm));
+  margin-bottom: 0.2rem;
+}
+
+.react-sigma-controls.top-right {
+  border: none;
+}
+
+.react-sigma-control:last-child {
+  display: none;
+}
+
+.expand-on-focus {
+  transition: width 0.3s ease;
+  width: 10rem;
+}
+
+.expand-on-focus:focus-within {
+  width: 15rem; /* expand on focus */
+}
+
+.active-card {
+  border-color: var(--mantine-color-darkBlue-5);
+  border-width: 2px; /* Add border width */
+
+  transition: border-color 0.3s ease; /* Add transition for smooth effect */
+}
+
+.custom-table th {
+  background-color: var(--mantine-color-gray-1);
+  font-weight: 500;
+}
+
+.overscroll:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
+.custom-modal-popup .mantine-ScrollArea-viewport {
+  padding-bottom: 0.5rem;
+}

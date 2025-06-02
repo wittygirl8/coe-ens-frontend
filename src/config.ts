@@ -2,10 +2,8 @@
 const {
   VITE_APPLICATION_BACKEND: APPLICATION_BACKEND,
   VITE_ANALYSIS_ORCHESTRATION: ANALYSIS_ORCHESTRATION,
-  VITE_ORBIS_API: ORBIS_API,
+  VITE_SOCKET_URL: SOCKET_URL,
 } = import.meta.env;
-
-export const ORBIS_URL = ORBIS_API;
 
 const ORCHESTRATOR_API = {
   TRIGGER_SUPPLIER_VALIDATION: `${ANALYSIS_ORCHESTRATION}/analysis/trigger-supplier-validation`,
@@ -18,12 +16,17 @@ const BACKEND_API = {
   CURRENT_USER: `${APPLICATION_BACKEND}/users/me`,
   UPDATE_SUGGESTION_BULK: `${APPLICATION_BACKEND}/supplier/update-suggestions-bulk`,
   LOGIN: `${APPLICATION_BACKEND}/auth/login`,
+  GET_GRAPH: `${APPLICATION_BACKEND}/graph/get-network-graph`,
+  SUBMODAL_FINDINGS: `${APPLICATION_BACKEND}/graph/get-submodal-findings`,
+  GET_SUBMODAL_FINANCIALS: `${APPLICATION_BACKEND}/graph/get-submodal-financials`,
+  GET_SUPPLIER_COUNTRIES: (clientId: string) =>
+    `${APPLICATION_BACKEND}/graph/supplier-countries?client_id=${clientId}`,
   SUPPLIER_NO_MATCH_COUNT: (session_id: string) =>
     `${APPLICATION_BACKEND}/supplier/get-nomatch-count?session_id=${session_id}`,
   GET_SUPPLIER_DATA: (session_id: string) =>
     `${APPLICATION_BACKEND}/supplier/get-supplier-data?session_id=${session_id}`,
   GET_MAIN_SUPPLIER_DATA: (session_id: string) =>
-    `${APPLICATION_BACKEND}/supplier/get-main-supplier-data?session_id=${session_id}`,
+    `${APPLICATION_BACKEND}/supplier/get-main-supplier-data-compiled?session_id=${session_id}`,
   UPDATE_SUGGESTION_SINGLE: (session_id: string) =>
     `${APPLICATION_BACKEND}/supplier/update-suggestions-single?session_id=${session_id}`,
   SINGLE_REPORT_DOWNLOAD: (
@@ -34,6 +37,12 @@ const BACKEND_API = {
     `${APPLICATION_BACKEND}/report/download-report/?session_id=${session_id}&ens_id=${ens_id}&type_of_file=${fileType}`,
   BULK_REPORT_DOWNLOAD: (session_id: string) =>
     `${APPLICATION_BACKEND}/report/bulk-download-report/?session_id=${session_id}`,
+  STREAMING_SESSION_STATUS: (session_id?: string) =>
+    session_id
+      ? `${SOCKET_URL}/session-status?session_id=${session_id}`
+      : `${SOCKET_URL}/session-status`,
+  STREAMING_ENSID_STATUS: (session_id: string) =>
+    `${SOCKET_URL}/ensid-status?session_id=${session_id}`,
 };
 
 export const API_ENDPOINTS = {

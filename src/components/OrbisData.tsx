@@ -194,6 +194,7 @@ export function OrbisData({ nextStep }: Readonly<{ nextStep: () => void }>) {
   };
 
   const triggerStartAnalysis = async () => {
+    setEnableStartAnalysis(false);
     try {
       await axiosInstance.post(API_ENDPOINTS.TRIGGER_ANALYSIS, {
         session_id: sessionId,
@@ -201,6 +202,8 @@ export function OrbisData({ nextStep }: Readonly<{ nextStep: () => void }>) {
       nextStep();
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setEnableStartAnalysis(true);
     }
   };
 

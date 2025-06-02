@@ -65,41 +65,41 @@ export default function Login() {
   return (
     <Box className={classes.container}>
       <Box className={classes.containerContent} w={420} my={40}>
-        <Title ta='center' c='white' className={classes.title}>
+        <Title ta="center" c="white" className={classes.title}>
           Welcome back!
         </Title>
-        <Text size='sm' ta='center' c='white' mt={5}>
+        <Text size="sm" ta="center" c="white" mt={5}>
           Do not have an account yet?{' '}
-          <Anchor size='sm' component='button'>
+          <Anchor size="sm" component="button">
             Create account
           </Anchor>
         </Text>
 
-        <Paper withBorder shadow='md' p={30} mt={30} radius='md'>
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <form
             onSubmit={form.onSubmit((values: FormValues) => onSubmit(values))}
           >
             <TextInput
               autoFocus
-              label='Email'
-              placeholder='Enter Email'
+              label="Email"
+              placeholder="Enter Email"
               withAsterisk
               {...form.getInputProps('email')}
             />
             <PasswordInput
-              label='Password'
-              placeholder='Enter password'
-              mt='md'
+              label="Password"
+              placeholder="Enter password"
+              mt="md"
               withAsterisk
               {...form.getInputProps('password')}
             />
-            <Group justify='space-between' mt='lg'>
-              <Checkbox label='Remember me' />
-              <Anchor component='button' size='sm'>
+            <Group justify="space-between" mt="lg">
+              <Checkbox label="Remember me" />
+              <Anchor component="button" size="sm">
                 Forgot password?
               </Anchor>
             </Group>
-            <Button type='submit' fullWidth mt='xl'>
+            <Button type="submit" fullWidth mt="xl">
               Sign in
             </Button>
           </form>

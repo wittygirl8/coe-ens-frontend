@@ -98,7 +98,8 @@ const NewSessionButton = () => {
       onClick={handleClick}
       className={clsx(classes.control)}
       component={NavLink}
-      to="/"
+      to="/new-session"
+      style={{ marginTop: '4px' }}
     >
       New Session
     </UnstyledButton>
@@ -114,13 +115,13 @@ export default function MainDashboardLayout({
 
   return (
     <AppShell
-      header={{ height: 60 }}
+      header={{ height: '4rem' }}
+      footer={{ height: '3rem' }}
       navbar={{
         width: 300,
         breakpoint: 'sm',
         collapsed: { desktop: true, mobile: !opened },
       }}
-      padding="md"
     >
       <AppShell.Header>
         <Container size={'105rem'}>
@@ -147,12 +148,20 @@ export default function MainDashboardLayout({
                 ENS - Entity Screening
               </Text>
               <Group ml="xl" gap={0} visibleFrom="sm">
+                <UnstyledButton
+                  to={'/'}
+                  component={NavLink}
+                  style={{ marginTop: '4px' }}
+                  className={clsx(classes.control)}
+                >
+                  Network Graph
+                </UnstyledButton>
                 <NewSessionButton />
-
                 <UnstyledButton
                   to={'/analysis-hub'}
                   component={NavLink}
                   className={clsx(classes.control)}
+                  style={{ marginTop: '4px' }}
                 >
                   Analysis Hub
                 </UnstyledButton>

@@ -17,7 +17,11 @@ import { useAppContext } from '../contextAPI/AppContext';
 import axiosInstance from '../utils/axiosInstance';
 import { API_ENDPOINTS } from '../config';
 
-export default function DropzoneButton({ nextStep }: { nextStep: () => void }) {
+export default function DropzoneButton({
+  nextStep,
+}: {
+  readonly nextStep: () => void;
+}) {
   const [loading, setLoading] = useState<boolean>(false);
   const theme = useMantineTheme();
   const openRef = useRef<() => void>(null);

@@ -10,12 +10,12 @@ import {
 import { DataTableColumn } from 'mantine-datatable';
 import { useDisclosure, useSetState } from '@mantine/hooks';
 import { IconAlertTriangle, IconCheck } from '@tabler/icons-react';
-import { io } from 'socket.io-client';
+import useWebSocket from 'react-use-websocket';
 
 import MainDashboardLayout from '../layouts/MainDashboardLayout';
 import Results from '../components/Results';
 import { DataGrid } from '../components/DataGrid';
-import { API_ENDPOINTS, ORBIS_URL } from '../config';
+import { API_ENDPOINTS } from '../config';
 import { useAppContext } from '../contextAPI/AppContext';
 
 type SessionInfo = {
@@ -23,8 +23,6 @@ type SessionInfo = {
   create_time: string;
   overall_status: 'COMPLETED' | 'IN-PROGRESS' | 'FAILED';
 };
-
-const socket = io(ORBIS_URL);
 
 const SessionStatus = ({
   overall_status = 'IN-PROGRESS',
@@ -115,6 +113,12 @@ function SessionTable({
   setSessionState: (state: any) => void;
 }>) {
   const [records, setRecords] = useState<SessionInfo[]>([]);
+  const { lastMessage } = useWebSocket(
+    `${API_ENDPOINTS.STREAMING_SESSION_STATUS()}`,
+    {
+      shouldReconnect: () => true, // Auto-reconnect on close
+    }
+  );
 
   const onRowClick = (args: { record: SessionInfo }) => {
     setSessionState(args.record);
@@ -127,7 +131,8 @@ function SessionTable({
   };
 
   useEffect(() => {
-    socket.on('session-status', (data) => {
+    if (lastMessage) {
+      const data = JSON.parse(lastMessage.data);
       setRecords((prevRecords) => {
         const recordIndex = prevRecords.findIndex(
           (record) => record.session_id === data.session_id
@@ -150,12 +155,8 @@ function SessionTable({
           overall_status: data.overall_status,
         }));
       }
-    });
-
-    return () => {
-      socket.off('session-status');
-    };
-  }, []);
+    }
+  }, [lastMessage]);
 
   useEffect(() => {
     if (!sessionState.session_id && records.length > 0) {

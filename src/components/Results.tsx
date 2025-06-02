@@ -7,15 +7,13 @@ import {
   IconFileZip,
 } from '@tabler/icons-react';
 import { DataTableColumn } from 'mantine-datatable';
-import { io } from 'socket.io-client';
+import useWebSocket from 'react-use-websocket';
 
 import { Supplier } from '../types';
-import { API_ENDPOINTS, ORBIS_URL } from '../config';
+import { API_ENDPOINTS } from '../config';
 import { useAppContext } from '../contextAPI/AppContext';
 import { useDownloadReport } from '../hooks/useDownloadReport';
 import { DataGrid } from './DataGrid';
-
-const socket = io(ORBIS_URL);
 
 interface DownloadButtonProps {
   sessionId: string;
@@ -49,7 +47,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
     }
   }, [shouldDownload, refetch]);
 
-  if (status === 'NOT_STARTED') {
+  if (status === 'NOT_STARTED' || status === 'STARTED') {
     return (
       <ActionIcon
         loading
@@ -100,11 +98,26 @@ export default function Results({
 }>) {
   const [records, setRecords] = useState<Supplier[]>([]);
   const [downloadZip, setDownloadZip] = useState(false);
-  const [status, setStatus] = useState(sessionStatus);
+  const [status, setStatus] = useState('');
 
   const { sessionId: contextSessionId } = useAppContext();
 
   const sessionId = session_id || contextSessionId;
+  const session_status = status || sessionStatus;
+
+  const { lastMessage: sessionLastMessage } = useWebSocket(
+    `${API_ENDPOINTS.STREAMING_SESSION_STATUS(sessionId)}`,
+    {
+      shouldReconnect: () => true, // Auto-reconnect on close
+    }
+  );
+
+  const { lastMessage } = useWebSocket(
+    `${API_ENDPOINTS.STREAMING_ENSID_STATUS(sessionId)}`,
+    {
+      shouldReconnect: () => true, // Auto-reconnect on close
+    }
+  );
 
   const { refetch: refetchZip } = useDownloadReport({
     sessionId,
@@ -121,7 +134,8 @@ export default function Results({
   }, [downloadZip, refetchZip]);
 
   useEffect(() => {
-    socket.on('report-status', (data) => {
+    if (lastMessage) {
+      const data = JSON.parse(lastMessage.data);
       setRecords((prevRecords) => {
         const recordIndex = prevRecords.findIndex(
           (record) => record.ens_id === data.ens_id
@@ -131,24 +145,23 @@ export default function Results({
           const updatedRecords = [...prevRecords];
           updatedRecords[recordIndex] = {
             ...updatedRecords[recordIndex],
-            report_generation_status: data.report_status,
+            overall_status: data.overall_status,
           };
           return updatedRecords;
         }
         return prevRecords;
       });
-    });
+    }
+  }, [lastMessage]);
 
-    socket.on('session-status', (data) => {
-      if (data.session_id !== sessionId) return;
-      setStatus(data.overall_status);
-    });
-
-    return () => {
-      socket.off('report-status');
-      socket.off('session-status');
-    };
-  }, [sessionId]);
+  useEffect(() => {
+    if (sessionLastMessage) {
+      const data = JSON.parse(sessionLastMessage.data);
+      if (data.session_id === sessionId) {
+        setStatus(data.overall_status);
+      }
+    }
+  }, [sessionLastMessage]);
 
   if (!sessionId) return null;
 
@@ -166,12 +179,12 @@ export default function Results({
       accessor: 'download',
       title: 'Download',
       textAlign: 'center',
-      render: ({ ens_id, name, report_generation_status }) => (
+      render: ({ ens_id, name, overall_status }) => (
         <DownloadButton
           sessionId={sessionId}
           ensId={ens_id}
           name={name}
-          status={report_generation_status}
+          status={overall_status}
         />
       ),
     },
@@ -185,7 +198,7 @@ export default function Results({
         </Title>
         <Button
           leftSection={
-            status.toLowerCase() === 'failed' ? (
+            session_status.toLowerCase() === 'failed' ? (
               <IconAlertTriangle size={18} stroke={1.5} />
             ) : (
               <IconFileZip size={18} stroke={1.5} />
@@ -194,10 +207,10 @@ export default function Results({
           mb="sm"
           pr={12}
           variant="gradient"
-          disabled={status.toLowerCase() !== 'completed'}
+          disabled={session_status.toLowerCase() !== 'completed'}
           onClick={() => setDownloadZip(true)}
         >
-          {status.toLowerCase() === 'failed'
+          {session_status.toLowerCase() === 'failed'
             ? 'Failed to Generate'
             : 'Download All as ZIP'}
         </Button>
